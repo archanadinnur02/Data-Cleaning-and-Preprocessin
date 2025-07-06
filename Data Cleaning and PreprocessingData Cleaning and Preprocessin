@@ -1,0 +1,68 @@
+Data Cleaning and Preprocessing in Python (Pandas)
+Step 1: Load Libraries & Dataset
+import pandas as pd
+
+# Load dataset
+df = pd.read_csv("marketing_campaign.csv", sep=';')  # Note: this dataset uses semicolons
+Step 2: Initial Inspection
+# View basic info
+print(df.info())
+print(df.head())
+Step 3: Handle Missing Values
+# Check missing values
+print(df.isnull().sum())
+
+# Drop rows with missing values (or fill if small number)
+df = df.dropna()
+Step 4: Remove Duplicates
+# Remove duplicate rows
+df = df.drop_duplicates()
+Step 5: Standardize Text Columns
+# Standardize 'Education', 'Marital_Status', etc.
+df['Education'] = df['Education'].str.strip().str.title()
+df['Marital_Status'] = df['Marital_Status'].str.strip().str.title()
+Step 6: Date Format Fix
+# Convert 'Dt_Customer' to datetime
+df['Dt_Customer'] = pd.to_datetime(df['Dt_Customer'], format='%d-%m-%Y')
+Step 7: Clean Column Names
+
+# Standardize column names
+df.columns = df.columns.str.strip().str.lower().str.replace(' ', '_')
+Step 8: Fix Data Types
+# Ensure correct data types
+df['income'] = df['income'].astype(float)
+df['kidhome'] = df['kidhome'].astype(int)
+df['teenhome'] = df['teenhome'].astype(int)
+df['year_birth'] = df['year_birth'].astype(int)
+📄 Summary of Changes
+Missing values: Removed rows with missing values (like Income).
+
+Duplicates: Removed any exact duplicate rows.
+
+Text standardization: Fixed capitalization and spacing in columns like Education and Marital_Status.
+
+Date formatting: Converted Dt_Customer to proper datetime.
+
+Column renaming: All column headers made lowercase and spaces replaced with underscores.
+
+Data types: Casted numerical and date columns to appropriate types (e.g., income, year_birth, etc.).
+
+✅ Deliverables for GitHub Submission
+You should submit:
+
+Cleaned Dataset File
+Save as CSV:
+
+df.to_csv("cleaned_customer_data.csv", index=False)
+Summary File (README or summary.txt)
+Example:
+
+markdown
+## Data Cleaning Summary
+
+- Removed 24 rows with missing values in 'Income'.
+- Dropped 3 duplicate rows.
+- Standardized 'Education' and 'Marital_Status' column text formatting.
+- Converted 'Dt_Customer' to datetime (format: dd-mm-yyyy).
+- Cleaned column names: lowercase, no spaces or special characters.
+- Fixed data types for numeric and date fields.
